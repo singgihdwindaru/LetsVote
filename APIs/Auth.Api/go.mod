@@ -1,4 +1,4 @@
-module github.com/singgihdwindaru/LetsVote
+module github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/config
 
 go 1.18
 
