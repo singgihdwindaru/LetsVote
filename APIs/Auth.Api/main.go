@@ -2,11 +2,14 @@ package main
 
 import (
 	"fmt"
-	// cfg "auth.api/config"
+	// "github.com/singgihdwindaru/LetsVote/config"
 )
 
 func main() {
 	fmt.Println("Secure Vote")
-	// r := cfg.SetGinRouter()
-	// err = r.run
+	// r := config.SetGinRouter()
+	// err := r.Run(":8080")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 }
