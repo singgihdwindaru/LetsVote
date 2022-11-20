@@ -5,14 +5,16 @@ import (
 )
 
 type (
-	IUserRepository interface {
-		InsertUser(ctx context.Context, email, name, password string) error
-		GetUserByNIK(ctx context.Context, nik string) (*User, error)
+	IUserMysqlRepository interface {
+		InsertUser(ctx context.Context, guid, metadata, hash string) error
+		// InsertParticipant(ctx context.Context, nik, nonce int64, previousHash, hash string) error
+		GetUserByNIK(ctx context.Context, nik int64) (*User, error)
+		// GetVotersByNIK(ctx context.Context, nik int64) (*User, error)
 	}
 	IUserUsecase interface {
 		CreateUser(ctx context.Context, request CreateUserRequest) (*CreateUserResponse, error)
 		SignIn(ctx context.Context, request SignInRequest) (*SignInResponse, error)
-		CreateParticipant(ctx context.Context, request CreateParticipantRequest) (*CreateParticipantResponse, error)
+		CreateVoter(ctx context.Context, request CreateVoterRequest) (*CreateVoterResponse, error)
 	}
 )
 type (
@@ -42,12 +44,5 @@ type (
 	SignInResponse struct {
 		Token string `binding:"required" json:"token"`
 		Hash  string `binding:"required" json:"hash"`
-	}
-
-	CreateParticipantRequest struct {
-		NIK string `binding:"required" json:"registrationNumber"`
-	}
-	CreateParticipantResponse struct {
-		RegistrationNumber string `binding:"required" json:"registrationNumber"`
 	}
 )

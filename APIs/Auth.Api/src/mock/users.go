@@ -12,31 +12,31 @@ import (
 	models "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/models"
 )
 
-// MockIUserRepository is a mock of IUserRepository interface.
-type MockIUserRepository struct {
+// MockIUserMysqlRepository is a mock of IUserMysqlRepository interface.
+type MockIUserMysqlRepository struct {
 	ctrl     *gomock.Controller
-	recorder *MockIUserRepositoryMockRecorder
+	recorder *MockIUserMysqlRepositoryMockRecorder
 }
 
-// MockIUserRepositoryMockRecorder is the mock recorder for MockIUserRepository.
-type MockIUserRepositoryMockRecorder struct {
-	mock *MockIUserRepository
+// MockIUserMysqlRepositoryMockRecorder is the mock recorder for MockIUserMysqlRepository.
+type MockIUserMysqlRepositoryMockRecorder struct {
+	mock *MockIUserMysqlRepository
 }
 
-// NewMockIUserRepository creates a new mock instance.
-func NewMockIUserRepository(ctrl *gomock.Controller) *MockIUserRepository {
-	mock := &MockIUserRepository{ctrl: ctrl}
-	mock.recorder = &MockIUserRepositoryMockRecorder{mock}
+// NewMockIUserMysqlRepository creates a new mock instance.
+func NewMockIUserMysqlRepository(ctrl *gomock.Controller) *MockIUserMysqlRepository {
+	mock := &MockIUserMysqlRepository{ctrl: ctrl}
+	mock.recorder = &MockIUserMysqlRepositoryMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockIUserRepository) EXPECT() *MockIUserRepositoryMockRecorder {
+func (m *MockIUserMysqlRepository) EXPECT() *MockIUserMysqlRepositoryMockRecorder {
 	return m.recorder
 }
 
 // GetUserByNIK mocks base method.
-func (m *MockIUserRepository) GetUserByNIK(ctx context.Context, nik string) (*models.User, error) {
+func (m *MockIUserMysqlRepository) GetUserByNIK(ctx context.Context, nik int64) (*models.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserByNIK", ctx, nik)
 	ret0, _ := ret[0].(*models.User)
@@ -45,23 +45,23 @@ func (m *MockIUserRepository) GetUserByNIK(ctx context.Context, nik string) (*mo
 }
 
 // GetUserByNIK indicates an expected call of GetUserByNIK.
-func (mr *MockIUserRepositoryMockRecorder) GetUserByNIK(ctx, nik interface{}) *gomock.Call {
+func (mr *MockIUserMysqlRepositoryMockRecorder) GetUserByNIK(ctx, nik interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserByNIK", reflect.TypeOf((*MockIUserRepository)(nil).GetUserByNIK), ctx, nik)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserByNIK", reflect.TypeOf((*MockIUserMysqlRepository)(nil).GetUserByNIK), ctx, nik)
 }
 
 // InsertUser mocks base method.
-func (m *MockIUserRepository) InsertUser(ctx context.Context, email, name, password string) error {
+func (m *MockIUserMysqlRepository) InsertUser(ctx context.Context, guid, metadata, hash string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "InsertUser", ctx, email, name, password)
+	ret := m.ctrl.Call(m, "InsertUser", ctx, guid, metadata, hash)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // InsertUser indicates an expected call of InsertUser.
-func (mr *MockIUserRepositoryMockRecorder) InsertUser(ctx, email, name, password interface{}) *gomock.Call {
+func (mr *MockIUserMysqlRepositoryMockRecorder) InsertUser(ctx, guid, metadata, hash interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertUser", reflect.TypeOf((*MockIUserRepository)(nil).InsertUser), ctx, email, name, password)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertUser", reflect.TypeOf((*MockIUserMysqlRepository)(nil).InsertUser), ctx, guid, metadata, hash)
 }
 
 // MockIUserUsecase is a mock of IUserUsecase interface.
@@ -87,21 +87,6 @@ func (m *MockIUserUsecase) EXPECT() *MockIUserUsecaseMockRecorder {
 	return m.recorder
 }
 
-// CreateParticipant mocks base method.
-func (m *MockIUserUsecase) CreateParticipant(ctx context.Context, request models.CreateParticipantRequest) (*models.CreateParticipantResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateParticipant", ctx, request)
-	ret0, _ := ret[0].(*models.CreateParticipantResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// CreateParticipant indicates an expected call of CreateParticipant.
-func (mr *MockIUserUsecaseMockRecorder) CreateParticipant(ctx, request interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateParticipant", reflect.TypeOf((*MockIUserUsecase)(nil).CreateParticipant), ctx, request)
-}
-
 // CreateUser mocks base method.
 func (m *MockIUserUsecase) CreateUser(ctx context.Context, request models.CreateUserRequest) (*models.CreateUserResponse, error) {
 	m.ctrl.T.Helper()
@@ -115,6 +100,21 @@ func (m *MockIUserUsecase) CreateUser(ctx context.Context, request models.Create
 func (mr *MockIUserUsecaseMockRecorder) CreateUser(ctx, request interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUser", reflect.TypeOf((*MockIUserUsecase)(nil).CreateUser), ctx, request)
+}
+
+// CreateVoter mocks base method.
+func (m *MockIUserUsecase) CreateVoter(ctx context.Context, request models.CreateVoterRequest) (*models.CreateVoterRequest, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateVoter", ctx, request)
+	ret0, _ := ret[0].(*models.CreateVoterRequest)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateVoter indicates an expected call of CreateVoter.
+func (mr *MockIUserUsecaseMockRecorder) CreateVoter(ctx, request interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateVoter", reflect.TypeOf((*MockIUserUsecase)(nil).CreateVoter), ctx, request)
 }
 
 // SignIn mocks base method.
