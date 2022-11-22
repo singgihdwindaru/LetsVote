@@ -3,6 +3,8 @@ package main
 import (
 	"database/sql"
 	"log"
+	"math/rand"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 
@@ -10,34 +12,42 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/config"
 	"github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/models"
-	controller "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/account/controller/http"
+	httpAccount "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/account/controller/http"
 	accountRepo "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/account/repository/mysql"
-	"github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/account/usecase"
+	accountUc "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/account/usecase"
+	httpVoter "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/voter/controller/http"
 	voterRepo "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/voter/repository/mysql"
+	voterUc "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/voter/usecase"
 )
 
 var (
-	DB                   *sql.DB
-	usersMysqlRepo       models.IUserMysqlRepository
-	voterMysqlRepository models.IVoterMysqlRepository
+	DB             *sql.DB
+	usersMysqlRepo models.IUserMysqlRepository
+	voterMysqlRepo models.IVoterMysqlRepository
 
-	userUsecase models.IUserUsecase
+	userUsecase  models.IUserUsecase
+	voterUsecase models.IVoterUsecase
 )
 
+func init() {
+	rand.Seed(time.Now().UnixNano())
+
+}
 func initRepo() {
 	usersMysqlRepo = accountRepo.NewAccountMysqlRepository(DB)
-	voterMysqlRepository = voterRepo.NewVoterMysqlRepository(DB)
+	voterMysqlRepo = voterRepo.NewVoterMysqlRepository(DB)
 }
 
 func initUsecase() {
-	userUsecase = usecase.NewAccountUsecase(usersMysqlRepo, voterMysqlRepository)
+	userUsecase = accountUc.NewAccountUsecase(usersMysqlRepo)
+	voterUsecase = voterUc.NewVoterUsecase(usersMysqlRepo, voterMysqlRepo)
 }
 func SetupApi() *gin.Engine {
 	initRepo()
 	initUsecase()
 	r := gin.Default()
-	controller.NewAccountController(r, userUsecase)
-
+	httpAccount.NewAccountController(r, userUsecase)
+	httpVoter.NewAccountController(r, voterUsecase)
 	return r
 }
 

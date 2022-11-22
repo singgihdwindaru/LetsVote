@@ -38,7 +38,7 @@ func (r *voterMysqlRepository) CreateVoter(ctx context.Context, nik int64, nonce
 }
 
 // GetVotersByNIK implements models.IVoterMysqlRepository
-func (r *voterMysqlRepository) GetVotersByNIK(ctx context.Context, nik int64) (*models.User, error) {
+func (r *voterMysqlRepository) GetVotersByNIK(ctx context.Context, nik int64) (*models.Voter, error) {
 	tx, err := r.DB.Begin()
 	if err != nil {
 		log.Printf("Error Begin Transaction GetVotersByNIK : %v\n", err)
@@ -53,11 +53,11 @@ func (r *voterMysqlRepository) GetVotersByNIK(ctx context.Context, nik int64) (*
 		return nil, err
 
 	}
-	res := []models.User{}
+	res := []models.Voter{}
 
 	for rows.Next() {
-		user := models.User{}
-		err = rows.Scan(&user.Id, &user.Guid, &user.Metadata, &user.Hash)
+		user := models.Voter{}
+		err = rows.Scan(&user.UserId, &user.Nonce, &user.PreviousHash, &user.Hash)
 		if err != nil {
 			log.Printf("Error when Scanning data GetVotersByNIK : %v", err)
 			return nil, err

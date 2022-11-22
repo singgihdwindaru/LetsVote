@@ -7,14 +7,11 @@ import (
 type (
 	IUserMysqlRepository interface {
 		InsertUser(ctx context.Context, guid, metadata, hash string) error
-		// InsertParticipant(ctx context.Context, nik, nonce int64, previousHash, hash string) error
 		GetUserByNIK(ctx context.Context, nik int64) (*User, error)
-		// GetVotersByNIK(ctx context.Context, nik int64) (*User, error)
 	}
 	IUserUsecase interface {
 		CreateUser(ctx context.Context, request CreateUserRequest) (*CreateUserResponse, error)
 		SignIn(ctx context.Context, request SignInRequest) (*SignInResponse, error)
-		CreateVoter(ctx context.Context, request CreateVoterRequest) (*CreateVoterResponse, error)
 	}
 )
 type (
