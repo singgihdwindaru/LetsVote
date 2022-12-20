@@ -10,18 +10,18 @@ import (
 	"github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/models"
 )
 
-type accountMysqlRepository struct {
+type usersMysqlRepository struct {
 	DB *sql.DB
 }
 
-func NewAccountMysqlRepository(db *sql.DB) models.IUserMysqlRepository {
-	return &accountMysqlRepository{
+func NewUsersMysqlRepository(db *sql.DB) models.IUserMysqlRepository {
+	return &usersMysqlRepository{
 		DB: db,
 	}
 }
 
 // GetUserByNIK implements models.IUserMysqlRepository
-func (r *accountMysqlRepository) GetUserByNIK(ctx context.Context, nik int64) (*models.User, error) {
+func (r *usersMysqlRepository) GetUserByNIK(ctx context.Context, nik int64) (*models.User, error) {
 	tx, err := r.DB.Begin()
 	if err != nil {
 		log.Printf("Error Begin Transaction GetUserByNIK : %v\n", err)
@@ -54,7 +54,7 @@ func (r *accountMysqlRepository) GetUserByNIK(ctx context.Context, nik int64) (*
 }
 
 // InsertUser implements models.IUserMysqlRepository
-func (r *accountMysqlRepository) InsertUser(ctx context.Context, guid, metadata, hash string) error {
+func (r *usersMysqlRepository) InsertUser(ctx context.Context, guid, metadata, hash string) error {
 	tx, err := r.DB.Begin()
 	if err != nil {
 		log.Printf("Error Begin Transaction InsertUser : %v\n", err)

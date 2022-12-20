@@ -8,12 +8,12 @@ import (
 	"github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/models"
 )
 
-type accountController struct {
+type usersController struct {
 	accountUsecase models.IUserUsecase
 }
 
-func NewAccountController(r *gin.Engine, accountUsecase models.IUserUsecase) {
-	ctrl := &accountController{
+func NewUsersController(r *gin.Engine, accountUsecase models.IUserUsecase) {
+	ctrl := &usersController{
 		accountUsecase: accountUsecase,
 	}
 
@@ -21,7 +21,7 @@ func NewAccountController(r *gin.Engine, accountUsecase models.IUserUsecase) {
 	r.POST("/account/signin", ctrl.SignIn)
 }
 
-func (c *accountController) SignIn(g *gin.Context) {
+func (c *usersController) SignIn(g *gin.Context) {
 	// request := models.LoginRequest{}
 
 	// if err := g.BindJSON(&request); err != nil {
@@ -39,7 +39,7 @@ func (c *accountController) SignIn(g *gin.Context) {
 	// g.JSON(http.StatusOK, common.HttpResponse(http.StatusOK, "Success SignIn", result))
 }
 
-func (c *accountController) CreateUser(g *gin.Context) {
+func (c *usersController) CreateUser(g *gin.Context) {
 	request := models.CreateUserRequest{}
 
 	if err := g.BindJSON(&request); err != nil {

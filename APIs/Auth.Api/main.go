@@ -12,9 +12,9 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/config"
 	"github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/models"
-	httpAccount "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/account/controller/http"
-	accountRepo "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/account/repository/mysql"
-	accountUc "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/account/usecase"
+	httpUsers "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/users/controller/http"
+	usersRepo "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/users/repository/mysql"
+	usersUc "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/users/usecase"
 	httpVoter "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/voter/controller/http"
 	voterRepo "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/voter/repository/mysql"
 	voterUc "github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/services/voter/usecase"
@@ -34,20 +34,20 @@ func init() {
 
 }
 func initRepo() {
-	usersMysqlRepo = accountRepo.NewAccountMysqlRepository(DB)
+	usersMysqlRepo = usersRepo.NewUsersMysqlRepository(DB)
 	voterMysqlRepo = voterRepo.NewVoterMysqlRepository(DB)
 }
 
 func initUsecase() {
-	userUsecase = accountUc.NewAccountUsecase(usersMysqlRepo)
+	userUsecase = usersUc.NewUsersUsecase(usersMysqlRepo)
 	voterUsecase = voterUc.NewVoterUsecase(usersMysqlRepo, voterMysqlRepo)
 }
 func SetupApi() *gin.Engine {
 	initRepo()
 	initUsecase()
 	r := gin.Default()
-	httpAccount.NewAccountController(r, userUsecase)
-	httpVoter.NewAccountController(r, voterUsecase)
+	httpUsers.NewUsersController(r, userUsecase)
+	httpVoter.NewVoterController(r, voterUsecase)
 	return r
 }
 

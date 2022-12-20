@@ -12,18 +12,18 @@ import (
 	"github.com/singgihdwindaru/LetsVote/APIs/Auth.Api/src/models"
 )
 
-type accountUsecase struct {
+type usersUsecase struct {
 	accountMysqlRepository models.IUserMysqlRepository
 }
 
-func NewAccountUsecase(accountMysqlRepository models.IUserMysqlRepository) models.IUserUsecase {
-	return &accountUsecase{
+func NewUsersUsecase(accountMysqlRepository models.IUserMysqlRepository) models.IUserUsecase {
+	return &usersUsecase{
 		accountMysqlRepository: accountMysqlRepository,
 	}
 }
 
 // CreateUser implements models.IUserUsecase
-func (u *accountUsecase) CreateUser(ctx context.Context, request models.CreateUserRequest) (*models.CreateUserResponse, error) {
+func (u *usersUsecase) CreateUser(ctx context.Context, request models.CreateUserRequest) (*models.CreateUserResponse, error) {
 	user, err := u.accountMysqlRepository.GetUserByNIK(ctx, request.NIK)
 	if err != nil {
 		log.Println(err)
@@ -53,6 +53,6 @@ func (u *accountUsecase) CreateUser(ctx context.Context, request models.CreateUs
 }
 
 // SignIn implements models.IUserUsecase
-func (u *accountUsecase) SignIn(ctx context.Context, request models.SignInRequest) (*models.SignInResponse, error) {
+func (u *usersUsecase) SignIn(ctx context.Context, request models.SignInRequest) (*models.SignInResponse, error) {
 	panic("unimplemented")
 }

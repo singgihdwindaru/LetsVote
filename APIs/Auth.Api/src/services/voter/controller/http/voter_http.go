@@ -13,7 +13,7 @@ type voterController struct {
 	voterUsecase models.IVoterUsecase
 }
 
-func NewAccountController(r *gin.Engine, voterUsecase models.IVoterUsecase) {
+func NewVoterController(r *gin.Engine, voterUsecase models.IVoterUsecase) {
 	ctrl := &voterController{
 		voterUsecase: voterUsecase,
 	}
