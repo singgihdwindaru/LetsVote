@@ -47,7 +47,7 @@ func (u *voterUsecase) CreateVoter(ctx context.Context, request models.CreateVot
 	}
 	nikStr := strconv.FormatInt(int64(request.NIK), 10)
 	blockchain := models.NewBlockchain(nikStr, []byte{})
-	userBlock := fmt.Sprintf("%x", blockchain.Blocks[0].MyBlockHash)
+	userBlock := fmt.Sprintf("%x", blockchain.Blocks[0].CurrentBlockHash)
 	if userBlock != user.Hash {
 		err = errors.New("registered user's hash had been compromised")
 		log.Println(err.Error())
@@ -60,7 +60,7 @@ func (u *voterUsecase) CreateVoter(ctx context.Context, request models.CreateVot
 	}
 	nonceStr := strconv.FormatInt(int64(nonce), 10)
 	blockchain.AddBlock(nonceStr)
-	voterBlock := fmt.Sprintf("%x", blockchain.Blocks[1].MyBlockHash)
+	voterBlock := fmt.Sprintf("%x", blockchain.Blocks[1].CurrentBlockHash)
 
 	err = u.voterMysqlRepository.CreateVoter(ctx, request.NIK, int64(nonce), userBlock, voterBlock)
 	if err != nil {

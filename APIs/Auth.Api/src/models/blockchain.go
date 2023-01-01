@@ -9,7 +9,7 @@ import (
 type Block struct {
 	Timestamp         int64
 	PreviousBlockHash []byte
-	MyBlockHash       []byte
+	CurrentBlockHash  []byte
 	AllData           []byte
 }
 
@@ -33,12 +33,12 @@ func (block *Block) SetHash() {
 	// timestamp := []byte(strconv.FormatInt(block.Timestamp, 10))
 	headers := bytes.Join([][]byte{block.PreviousBlockHash, block.AllData}, []byte{})
 	hash := sha256.Sum256(headers)
-	block.MyBlockHash = hash[:]
+	block.CurrentBlockHash = hash[:]
 }
 
 // create the method that adds a new block to a blockchain
 func (blockchain *blockchain) AddBlock(data string) {
 	PreviousBlock := blockchain.Blocks[len(blockchain.Blocks)-1]
-	newBlock := newBlock(data, PreviousBlock.MyBlockHash)
+	newBlock := newBlock(data, PreviousBlock.CurrentBlockHash)
 	blockchain.Blocks = append(blockchain.Blocks, newBlock)
 }

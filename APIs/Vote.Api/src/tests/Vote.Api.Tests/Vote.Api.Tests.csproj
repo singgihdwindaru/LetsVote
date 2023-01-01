@@ -21,8 +21,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Vote.Api\Vote.Api.csproj" />
-  </ItemGroup>
-
 </Project>

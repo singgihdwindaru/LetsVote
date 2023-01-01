@@ -38,7 +38,7 @@ func (u *usersUsecase) CreateUser(ctx context.Context, request models.CreateUser
 	metadata, _ := json.Marshal(request)
 	nikStr := strconv.FormatInt(int64(request.NIK), 10)
 	blockchain := models.NewBlockchain(nikStr, []byte{})
-	hash := fmt.Sprintf("%x", blockchain.Blocks[0].MyBlockHash)
+	hash := fmt.Sprintf("%x", blockchain.Blocks[0].CurrentBlockHash)
 
 	err = u.accountMysqlRepository.InsertUser(ctx, guid, string(metadata), hash)
 	if err != nil {
