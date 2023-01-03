@@ -24,7 +24,7 @@ public class Blockchain
     private Block createNewBlock(string data, byte[] prevBlockHash)
     {
         Block block = new();
-        block.Timestamp = time.GetUnixTimeWithDelegate();
+        block.Timestamp = time.GetUnixTime();
         block.PreviousBlockHash = prevBlockHash;
         block.CurrentBlockHash = new byte[0];
         block.AllData = System.Text.Encoding.ASCII.GetBytes(data);
