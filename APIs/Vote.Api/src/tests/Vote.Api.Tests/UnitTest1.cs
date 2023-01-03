@@ -54,17 +54,15 @@ public class UnitTest1
         string[]? arg = testData.Args as string[];
         byte[] prevBlock = new byte[0];
         Blockchain block = new Blockchain(arg?[0] ?? "", prevBlock);
-        var actualResult = System.Text.Encoding.ASCII.GetString(block.Blockchains[0].CurrentBlockHash);
-        output.WriteLine($"first block hash : {actualResult}");
-        Assert.Equal(expectedResult?.ToArray()[0], actualResult);
-
-        // validate second block
-        if (arg?.Length > 1)
+        for (int i = 0; i < arg?.Length; i++)
         {
-            (Exception? err, bool isSuccess) = block.AddBlock(arg?[1] ?? "");
-            actualResult = System.Text.Encoding.ASCII.GetString(block.Blockchains[1].CurrentBlockHash);
-            output.WriteLine($"second block  hash : {actualResult}");
-            Assert.Equal(expectedResult?.ToArray()[1], actualResult);
+            if (i >= 1)
+            {
+                block.AddBlock(arg?[i] ?? "");
+            }
+            var actualResult = System.Text.Encoding.ASCII.GetString(block.Blockchains[i].CurrentBlockHash);
+            output.WriteLine($"block hash {i}: {actualResult}");
+            Assert.Equal(expectedResult?.ToArray()[i], actualResult);
         }
     }
 }

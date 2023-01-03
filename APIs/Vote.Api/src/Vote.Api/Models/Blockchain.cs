@@ -52,13 +52,11 @@ public class Blockchain
         block.CurrentBlockHash = System.Text.Encoding.ASCII.GetBytes(stringBuilder.ToString());
     }
 
-    public (Exception? err, bool isSuccess) AddBlock(string data)
+    public void AddBlock(string data)
     {
         var PreviousBlock = Blockchains[Blockchains.Count() - 1];
         var newBlock = createNewBlock(data, PreviousBlock.CurrentBlockHash);
         Blockchains.Add(newBlock);
-
-        return (null, true);
     }
 
 }
