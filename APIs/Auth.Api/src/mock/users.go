@@ -102,21 +102,6 @@ func (mr *MockIUserUsecaseMockRecorder) CreateUser(ctx, request interface{}) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUser", reflect.TypeOf((*MockIUserUsecase)(nil).CreateUser), ctx, request)
 }
 
-// CreateVoter mocks base method.
-func (m *MockIUserUsecase) CreateVoter(ctx context.Context, request models.CreateVoterRequest) (*models.CreateVoterRequest, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateVoter", ctx, request)
-	ret0, _ := ret[0].(*models.CreateVoterRequest)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// CreateVoter indicates an expected call of CreateVoter.
-func (mr *MockIUserUsecaseMockRecorder) CreateVoter(ctx, request interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateVoter", reflect.TypeOf((*MockIUserUsecase)(nil).CreateVoter), ctx, request)
-}
-
 // SignIn mocks base method.
 func (m *MockIUserUsecase) SignIn(ctx context.Context, request models.SignInRequest) (*models.SignInResponse, error) {
 	m.ctrl.T.Helper()
